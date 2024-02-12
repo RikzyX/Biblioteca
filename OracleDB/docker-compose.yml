@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+    oracle-db:
+        image: container-registry.oracle.com/database/enterprise:latest
+        environment:
+            - ORACLE_SID=ORCLCDB
+            - ORACLE_PDB=ORCLPDB1
+            - ORACLE_PWD=S1st3mas
+        ports:
+            - 1521:1521
+        volumes:
+            - oracle-data1:/opt/oracle/oradata
+            - oracle-backup1:/opt/oracle/backup
+        healthcheck:
+            test: ['CMD', 'sqlplus', '-L', 'sys/Oracle_123@//localhost:1521/ORCLCDB as sysdba', '@healthcheck.sql']
+            interval: 30s
+            timeout: 10s
+            retries: 5
+volumes:
+    oracle-data1:
+    oracle-backup1:
+
