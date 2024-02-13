@@ -1,5 +1,5 @@
 const oracledb = require('oracledb')
-const getAllLoanQuery = async (connection, query) => {
+const getAllhistoryLoanQuery = async (connection, query) => {
   try {
     const result = await connection.execute(
       query,
@@ -11,7 +11,7 @@ const getAllLoanQuery = async (connection, query) => {
     console.error('Database error:', error.message)
   }
 }
-const getAllLoansByIDQuery = async (connection, query, id) => {
+const getAllhistoryLoansByIDQuery = async (connection, query, id) => {
   try {
     const result = await connection.execute(query, [id], {
       outFormat: oracledb.OBJECT,
@@ -21,7 +21,7 @@ const getAllLoansByIDQuery = async (connection, query, id) => {
     console.error('Database error:', error.message)
   }
 }
-const postNewLoanQuery = async (connection, query, body) => {
+const postNewhistoryLoanQuery = async (connection, query, body) => {
   try {
     await connection.execute(
       query,
@@ -29,58 +29,42 @@ const postNewLoanQuery = async (connection, query, body) => {
         body.id,
         body.ejemplarid,
         body.usuarioid,
-        body.fprestamos,
         body.fdevolucion,
       ],
       { autoCommit: true }
     )
-    return 'Prestamo generado correctamente'
+    return 'Historial Prestamo generado correctamente'
   } catch (error) {
     console.error('Database error:', error.message)
     return error.message
   }
 }
-const putLoanQuery = async (connection, query, id, body) => {
+const puthistoryLoanQuery = async (connection, query, id, body) => {
   try {
     await connection.execute(
       query,
-      [body.ejemplarid, body.usuarioid, body.fprestamos, body.fdevolucion, id],
+      [body.ejemplarid, body.usuarioid,body.fdevolucion, id],
       { autoCommit: true }
     )
-    return 'Prestamo actualizado correctamente'
+    return 'Historial Prestamo actualizado correctamente'
   } catch (error) {
     console.error('Database error:', error.message)
   }
 }
-const deleteLoanQuery = async (connection, query, id) => {
+const deletehistoryLoanQuery = async (connection, query, id) => {
   try {
     await connection.execute(query, [id], { autoCommit: true })
-    return `Prestamo de usuario ${id} eliminado correctamente`
+    return `Historial Prestamo de usuario ${id} eliminado correctamente`
   } catch (erro) {
     console.error('Database error:', erro.message)
     return erro.message
   }
 }
-const generateNewLoansQuery = async (connection, query, body) => {
-  try {
-    await connection.execute(query, [
-      body.ejemplarid,
-      body.usuarioid,
-      body.fechaprestamos,
-      body.fechadevolucion,
-    ])
-
-    console.log(result.outBinds)
-  } catch (error) {
-    return 'Error al solicitar el prestamos', error
-  }
-}
 
 module.exports = {
-  getAllLoanQuery,
-  getAllLoansByIDQuery,
-  postNewLoanQuery,
-  putLoanQuery,
-  deleteLoanQuery,
-  generateNewLoansQuery,
+  getAllhistoryLoanQuery,
+  getAllhistoryLoansByIDQuery,
+  postNewhistoryLoanQuery,
+  puthistoryLoanQuery,
+  deletehistoryLoanQuery,
 }

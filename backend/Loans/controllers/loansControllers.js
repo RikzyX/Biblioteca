@@ -68,7 +68,7 @@ export const putLoan = async (req, res) => {
   }
 }
 export const deleteLoan = async (req, res) => {
-  try { 
+  try {
     const connection = await dbUtils.ODBConection()
     const result = await deleteLoanQuery(connection, deleteLoans, req.params.id)
     res.status(200).json({ message: result })
@@ -87,17 +87,6 @@ export const generateNewLoan = async (req, res) => {
     )
     res.status(200).json({ message: result })
   } catch (error) {
-    console.error(err.message)
-    response.status(500).send('Error to generate new Loan')
-  }
-}
-export const makeLoansByUserType = async (req, res) =>{
-  try{
-    const connection = await dbUtils.ODBConection()
-    const result = await (connection,makeLoansByUserType,req.body)
-    res.status(200).json({message: result})
-
-  }catch(error){
     console.error(err.message)
     response.status(500).send('Error to generate new Loan')
   }

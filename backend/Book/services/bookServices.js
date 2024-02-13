@@ -30,8 +30,8 @@ const postNewBookQuery = async (connection, query, body) => {
         body.ISBN,
         body.Titulo,
         body.Autor,
-        body.NumPagina,
-        body.NumEjemploresComprados,
+        body.NumPaginas,
+        body.NumEjemplaresComprados,
         body.NumEjemplaresDisponibles,
         body.UriPortada,
       ],
@@ -50,16 +50,15 @@ const putBookQuery = async (connection, query, ISBN, body) => {
       [
         body.Titulo,
         body.Autor,
-        body.NumPagina,
-        body.NumEjemploresComprados,
+        body.NumPaginas,
+        body.NumEjemplaresComprados,
         body.NumEjemplaresDisponibles,
         body.UriPortada,
         ISBN,
       ],
       { autoCommit: true },
-      { outFormat: oracledb.OBJECT }
     )
-    return result.rows
+    return 'Datos actualizados correctamente'
   } catch (error) {
     console.error('Database error:', error.message)
   }
@@ -71,10 +70,23 @@ const deleteBookQuery = async (connection, query, ISBN) => {
     console.error('Database error:', erro.message)
   }
 }
+const borrowedBooksQuery = async (connection, query) => {
+  try {
+    const result = await connection.execute(
+      query,
+      {},
+      { outFormat: oracledb.OBJECT }
+    )
+    return result.rows
+  } catch (e) {
+    console.error('Database error:', error.message)
+  }
+}
 module.exports = {
   getAllBookQuery,
   getAllBooksByIDQuery,
   postNewBookQuery,
   putBookQuery,
   deleteBookQuery,
+  borrowedBooksQuery
 }

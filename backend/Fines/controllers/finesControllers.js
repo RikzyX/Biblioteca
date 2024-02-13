@@ -1,7 +1,19 @@
-import { allFinebyid, allFines, deleteFines, postnewFines, uptateFines } from '../constants/querys'
+import {
+  allFinebyid,
+  allFines,
+  deleteFines,
+  postnewFines,
+  uptateFines,
+} from '../constants/querys'
 
 const dbUtils = require('../../database/oracleConnection')
-const { getAllFineQuery, getAllFinesByIDQuery, postNewFineQuery, putFineQuery, deleteFineQuery, constrolledFinesQuery } = require('../services/finesServices')
+const {
+  getAllFineQuery,
+  getAllFinesByIDQuery,
+  postNewFineQuery,
+  putFineQuery,
+  deleteFineQuery,
+} = require('../services/finesServices')
 
 export const getAllFine = async (req, res) => {
   try {
@@ -16,7 +28,11 @@ export const getAllFine = async (req, res) => {
 export const getAllFineByID = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
-    const Fines = await getAllFinesByIDQuery(connection, allFinebyid, req.param.id)
+    const Fines = await getAllFinesByIDQuery(
+      connection,
+      allFinebyid,
+      req.param.id
+    )
     res.json({ data: Fines })
   } catch (error) {
     console.error('Error retrieving Fines:', error.message)
@@ -58,16 +74,6 @@ export const deleteFine = async (req, res) => {
     res.status(200).json({ message: result })
   } catch (err) {
     console.error(err.message)
-    response.status(500).send('Error deleting Finemendation to DB')
-  }
-}
-export const controlledFines = async(req, res) => {
-  try{
-    const connection = await dbUtils.ODBConection()
-    const result = await constrolledFinesQuery(connection, deleteFines, req.params.id)
-    res.status(200).json({ message: result })
-  }catch{
-    console.error(err.message)
-    response.status(500).send('Error deleting Finemendation to DB')
+    res.status(500).send('Error deleting Finemendation to DB')
   }
 }

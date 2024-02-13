@@ -39,10 +39,9 @@ const putRecomQuery = async (connection, query, ISBN, body) => {
     const result = await connection.execute(
       query,
       [body.LibroRecomendadoISBN, body.Comentario, ISBN],
-      { autoCommit: true },
-      { outFormat: oracledb.OBJECT }
+      { autoCommit: true }
     )
-    return result.rows
+    return 'Recomendacion actualizada correctamente'
   } catch (error) {
     console.error('Database error:', error.message)
   }

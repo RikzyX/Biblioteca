@@ -1,7 +1,22 @@
-const dbUtils = require('../../database/oracleConnection')
-const { allBooks, allBookbyid, postnewBooks, deleteBooks, uptateBooks } = require('../constants/querys')
-const { putBookQuery, postNewBookQuery, getAllBooksByIDQuery, getAllBookQuery, deleteBookQuery } = require('../services/bookServices')
+import { createScanner } from 'typescript'
 
+const dbUtils = require('../../database/oracleConnection')
+const {
+  allBooks,
+  allBookbyid,
+  postnewBooks,
+  deleteBooks,
+  uptateBooks,
+  browBooks,
+} = require('../constants/querys')
+const {
+  putBookQuery,
+  postNewBookQuery,
+  getAllBooksByIDQuery,
+  getAllBookQuery,
+  deleteBookQuery,
+  borrowedBooksQuery,
+} = require('../services/bookServices')
 
 export const getAllBook = async (req, res) => {
   try {
@@ -46,7 +61,7 @@ export const putBook = async (req, res) => {
       req.params.ISBN,
       req.body
     )
-    res.json(result)
+    res.status(200).json({ message: result })
   } catch (err) {
     console.error(err.message)
     response.status(500).send('Error updating Books to DB')
@@ -61,4 +76,11 @@ export const deleteBook = async (req, res) => {
     console.error(err.message)
     response.status(500).send('Error deleting Books to DB')
   }
+}
+export const borrowedBooks = async (req, res) => {
+  try {
+    const connection = await dbUtils.ODBConection()
+    const result = await borrowedBooksQuery(connection, browBooks)
+    res.status(200).json({ data: result })
+  } catch (error) {}
 }
