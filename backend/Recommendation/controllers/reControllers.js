@@ -13,7 +13,7 @@ const {
   deleteRecomQuery,
 } = require('../services/recomServices')
 const dbUtils = require('../../database/oracleConnection')
-exports.getAllRecom = async (req, res) => {
+export const getAllRecom = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const Recoms = await getAllRecomQuery(connection, allRecoms)
@@ -23,7 +23,7 @@ exports.getAllRecom = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Recoms' })
   }
 }
-exports.getAllRecomByID = async (req, res) => {
+export const getAllRecomByID = async (req, res) => {
   try {
     const ISBN = req.params.ISBN
     const connection = await dbUtils.ODBConection()
@@ -34,7 +34,7 @@ exports.getAllRecomByID = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Recoms' })
   }
 }
-exports.postNewRecom = async (req, res) => {
+export const postNewRecom = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await postNewRecomQuery(connection, postnewRecoms, req.body)
@@ -47,7 +47,7 @@ exports.postNewRecom = async (req, res) => {
     })
   }
 }
-exports.putRecom = async (req, res) => {
+export const putRecom = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await putRecomQuery(
@@ -62,7 +62,7 @@ exports.putRecom = async (req, res) => {
     response.status(500).send('Error updating Recoms to DB')
   }
 }
-exports.deleteRecom = async (req, res) => {
+export const deleteRecom = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     await deleteRecomQuery(connection, deleteRecoms, req.params.ISBN)

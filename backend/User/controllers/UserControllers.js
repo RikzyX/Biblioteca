@@ -14,7 +14,7 @@ const {
   deleteusers,
 } = require('../constants/querys')
 
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const users = await getAllUserQuery(connection, allusers)
@@ -24,7 +24,7 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving users' })
   }
 }
-exports.getAllUsersByID = async (req, res) => {
+export const getAllUsersByID = async (req, res) => {
   try {
     const id = req.params.id
     const connection = await dbUtils.ODBConection()
@@ -35,7 +35,7 @@ exports.getAllUsersByID = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving users' })
   }
 }
-exports.postNewUser = async (req, res) => {
+export const postNewUser = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     await postNewUserQuery(connection, postnewusers, req.body)
@@ -48,7 +48,7 @@ exports.postNewUser = async (req, res) => {
     })
   }
 }
-exports.putAndUser = async (req, res) => {
+export const putAndUser = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await putAndNewUserQuery(
@@ -63,7 +63,7 @@ exports.putAndUser = async (req, res) => {
     response.status(500).send('Error updating users to DB')
   }
 }
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     await deleteUserQuery(connection, deleteusers, req.params.id)

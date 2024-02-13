@@ -42,15 +42,9 @@ const postNewLoanQuery = async (connection, query, body) => {
 }
 const putLoanQuery = async (connection, query, id, body) => {
   try {
-     await connection.execute(
+    await connection.execute(
       query,
-      [
-        body.ejemplarid,
-        body.usuarioid,
-        body.fprestamos,
-        body.fdevolucion,
-        id,
-      ],
+      [body.ejemplarid, body.usuarioid, body.fprestamos, body.fdevolucion, id],
       { autoCommit: true }
     )
     return 'Prestamo actualizado correctamente'
@@ -67,10 +61,39 @@ const deleteLoanQuery = async (connection, query, id) => {
     return erro.message
   }
 }
+const generateNewLoansQuery = async (connection, query, body) => {
+  try {
+    await connection.execute(
+      query,
+      [body.usuarioid, body.ejemplarid, body.fprestamos, body.fdevolucion],
+    )
+    return 'Prestamo realizado con exito'
+  } catch (error) {
+    return 'Error al solicitar el prestamos', error
+  }
+}
+const makeLoansByUserTypeQuery = async (connection, query, body) => {
+  try {
+    await connection.execute(
+      query,
+      [body.usuarioid, body.ejemplarid, body.tipousuario],
+    )
+    return 'La operacion se realizo correctamente'
+  } catch (error) {
+    if (error instanceof oracledb.DatabaseError) {
+      const oracleError = error.errorNum + ': ' + error.message;
+      return ({ success: false, message: oracleError });
+  } else {
+      return({ success: false, message: 'Error interno del servidor' });
+  }
+  }
+}
 module.exports = {
   getAllLoanQuery,
   getAllLoansByIDQuery,
   postNewLoanQuery,
   putLoanQuery,
   deleteLoanQuery,
+  generateNewLoansQuery,
+  makeLoansByUserTypeQuery
 }

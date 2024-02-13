@@ -1,7 +1,9 @@
-const dbUtils = require('../../database/oracleConnection')
-const { getAllFineQuery, getAllFinesByIDQuery, postNewFineQuery, putFineQuery, deleteFineQuery } = require('../services/finesServices')
+import { allFinebyid, allFines, deleteFines, postnewFines, uptateFines } from '../constants/querys'
 
-exports.getAllFine = async (req, res) => {
+const dbUtils = require('../../database/oracleConnection')
+const { getAllFineQuery, getAllFinesByIDQuery, postNewFineQuery, putFineQuery, deleteFineQuery, constrolledFinesQuery } = require('../services/finesServices')
+
+export const getAllFine = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const Fines = await getAllFineQuery(connection, allFines)
@@ -11,7 +13,7 @@ exports.getAllFine = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Fines' })
   }
 }
-exports.getAllFineByID = async (req, res) => {
+export const getAllFineByID = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const Fines = await getAllFinesByIDQuery(connection, allFinebyid, req.param.id)
@@ -21,7 +23,7 @@ exports.getAllFineByID = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Fines' })
   }
 }
-exports.postNewFine = async (req, res) => {
+export const postNewFine = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await postNewFineQuery(connection, postnewFines, req.body)
@@ -34,7 +36,7 @@ exports.postNewFine = async (req, res) => {
     })
   }
 }
-exports.putFine = async (req, res) => {
+export const putFine = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await putFineQuery(
@@ -49,12 +51,22 @@ exports.putFine = async (req, res) => {
     response.status(500).send('Error updating Fines to DB')
   }
 }
-exports.deleteFine = async (req, res) => {
+export const deleteFine = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await deleteFineQuery(connection, deleteFines, req.params.id)
     res.status(200).json({ message: result })
   } catch (err) {
+    console.error(err.message)
+    response.status(500).send('Error deleting Finemendation to DB')
+  }
+}
+export const controlledFines = async(req, res) => {
+  try{
+    const connection = await dbUtils.ODBConection()
+    const result = await constrolledFinesQuery(connection, deleteFines, req.params.id)
+    res.status(200).json({ message: result })
+  }catch{
     console.error(err.message)
     response.status(500).send('Error deleting Finemendation to DB')
   }

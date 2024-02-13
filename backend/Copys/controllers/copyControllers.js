@@ -1,7 +1,7 @@
 const dbUtils = require('../../database/oracleConnection')
-const { allCopys, allCopybyid, postnewCopys, uptateCopys, deleteCopys } = require('../constants/querys')
-const { getAllCopyQuery, getAllCopysByIDQuery, postNewCopyQuery, putCopyQuery, deleteCopyQuery } = require('../services/copyServices')
-exports.getAllCopy = async (req, res) => {
+const { allCopys, allCopybyid, postnewCopys, uptateCopys, deleteCopys, verifyCopy } = require('../constants/querys')
+const { getAllCopyQuery, getAllCopysByIDQuery, postNewCopyQuery, putCopyQuery, deleteCopyQuery, verifyCopyQuery } = require('../services/copyServices')
+export const getAllCopy = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const Copys = await getAllCopyQuery(connection, allCopys)
@@ -11,7 +11,7 @@ exports.getAllCopy = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Copys' })
   }
 }
-exports.getAllCopyByID = async (req, res) => {
+export const getAllCopyByID = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const Copys = await getAllCopysByIDQuery(connection, allCopybyid, req.param.id)
@@ -21,7 +21,7 @@ exports.getAllCopyByID = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Copys' })
   }
 }
-exports.postNewCopy = async (req, res) => {
+export const postNewCopy = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await postNewCopyQuery(connection, postnewCopys, req.body)
@@ -34,7 +34,7 @@ exports.postNewCopy = async (req, res) => {
     })
   }
 }
-exports.putCopy = async (req, res) => {
+export const putCopy = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await putCopyQuery(
@@ -49,7 +49,7 @@ exports.putCopy = async (req, res) => {
     response.status(500).send('Error updating Copys to DB')
   }
 }
-exports.deleteCopy = async (req, res) => {
+export const deleteCopy = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await deleteCopyQuery(connection, deleteCopys, req.params.id)
@@ -57,5 +57,15 @@ exports.deleteCopy = async (req, res) => {
   } catch (err) {
     console.error(err.message)
     response.status(500).send('Error deleting Copymendation to DB')
+  }
+}
+export const verifyAllCopy = async (req, res) => {
+  try {
+    const connection = await dbUtils.ODBConection()
+    const Copys = await verifyCopyQuery(connection, verifyCopy)
+    res.json({ data: Copys })
+  } catch (error) {
+    console.error('Error retrieving Copys:', error.message)
+    res.status(500).send({ message: 'Error retrieving Copys' })
   }
 }

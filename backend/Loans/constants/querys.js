@@ -5,3 +5,5 @@ export const postnewLoans =
   `VALUES(:id,:ejemplarid,:usuarioid,TO_DATE(:fprestamos,'YYYY-MM-DD'),TO_DATE(:fdevolucion,'YYYY-MM-DD'))`
 export const uptateLoans = `UPDATE PRESTAMOS SET  FECHAPRESTAMO=:fprestamos, FECHADEVOLUCIONESPERADA=:fdevolucion, WHERE ID=:id AND EJEMPLARID=:ejemplarid AND USUARIOID=:usuarioid,`
 export const deleteLoans = `DELETE FROM PRESTAMOS WHERE ID=:id`
+export const generateNewLoans =`BEGIN PedirPrestamo(:usuarioid, :ejemplarid, TO_DATE(:fprestamos,'YYYY-MM-DD'), TO_DATE(:fdevolucion,'YYYY-MM-DD')); END;`
+export const makeLoansByUserType = `BEGIN RealizarPrestamo(:usuarioid,:ejemplarid,:tipousuario); END;`

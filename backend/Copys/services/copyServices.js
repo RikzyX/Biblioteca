@@ -40,13 +40,13 @@ const postNewCopyQuery = async (connection, query, body) => {
     return error.message
   }
 }
-const putCopyQuery = async (connection, query, ISBN, body) => {
+const putCopyQuery = async (connection, query, id, body) => {
   try {
-    const result = await connection.execute(
+    await connection.execute(
       query,
       [
-        body.identificadorejemplar,
-        body.libroisbn,
+        body.identificacionejemplar,
+        body.libroISBN,
         body.fechaadquisicion,
         body.observaciones,
         id,
@@ -67,10 +67,23 @@ const deleteCopyQuery = async (connection, query, id) => {
     return erro.message
   }
 }
+const verifyCopyQuery = async (connection, query) => {
+  try {
+    const result = await connection.execute(
+      query,
+      {},
+      { outFormat: oracledb.OBJECT }
+    )
+    return result.rows
+  } catch (error) {
+    console.error('Database error:', error.message)
+  }
+}
 module.exports = {
   getAllCopyQuery,
   getAllCopysByIDQuery,
   postNewCopyQuery,
   putCopyQuery,
   deleteCopyQuery,
+  verifyCopyQuery,
 }

@@ -41,7 +41,7 @@ const putFineQuery = async (connection, query, id, body) => {
       [body.usuarioid, body.finicio, body.diascumulados, body.ffinal, id],
       { autoCommit: true }
     )
-    return 'Prestamo actualizado correctamente'
+    return 'Multa actualizada correctamente'
   } catch (error) {
     console.error('Database error:', error.message)
   }
@@ -55,10 +55,26 @@ const deleteFineQuery = async (connection, query, id) => {
     return erro.message
   }
 }
+const constrolledFinesQuery = async (connection, query, body) => {
+  try {
+    const result = await connection.execute(
+      query,
+      [body.usuarioid],
+      {
+        autoCommit: true,
+      },
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    )
+    return result.outBinds
+  } catch (error) {
+    console.error('Database error:', error.message)
+  }
+}
 module.exports = {
   getAllFineQuery,
   getAllFinesByIDQuery,
   postNewFineQuery,
   putFineQuery,
   deleteFineQuery,
+  constrolledFinesQuery,
 }

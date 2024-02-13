@@ -3,7 +3,7 @@ const { allBooks, allBookbyid, postnewBooks, deleteBooks, uptateBooks } = requir
 const { putBookQuery, postNewBookQuery, getAllBooksByIDQuery, getAllBookQuery, deleteBookQuery } = require('../services/bookServices')
 
 
-exports.getAllBook = async (req, res) => {
+export const getAllBook = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const books = await getAllBookQuery(connection, allBooks)
@@ -13,7 +13,7 @@ exports.getAllBook = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Books' })
   }
 }
-exports.getAllBookByID = async (req, res) => {
+export const getAllBookByID = async (req, res) => {
   try {
     const ISBN = req.params.ISBN
     const connection = await dbUtils.ODBConection()
@@ -24,7 +24,7 @@ exports.getAllBookByID = async (req, res) => {
     res.status(500).send({ message: 'Error retrieving Books' })
   }
 }
-exports.postNewBook = async (req, res) => {
+export const postNewBook = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     await postNewBookQuery(connection, postnewBooks, req.body)
@@ -37,7 +37,7 @@ exports.postNewBook = async (req, res) => {
     })
   }
 }
-exports.putBook = async (req, res) => {
+export const putBook = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     const result = await putBookQuery(
@@ -52,7 +52,7 @@ exports.putBook = async (req, res) => {
     response.status(500).send('Error updating Books to DB')
   }
 }
-exports.deleteBook = async (req, res) => {
+export const deleteBook = async (req, res) => {
   try {
     const connection = await dbUtils.ODBConection()
     await deleteBookQuery(connection, deleteBooks, req.params.ISBN)

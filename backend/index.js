@@ -6,7 +6,7 @@ const routesBooks = require('./Book/routes/routes')
 const routesRecom = require('./Recommendation/routes/routes')
 const routesCopy = require('./Copys/routes/routes')
 const routesLoans = require('./Loans/routes/routes')
-
+const routesFines = require('./fines/routes/routes')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json({ type: '*/*' }))
 
@@ -17,6 +17,7 @@ app.use(routesBooks)
 app.use(routesRecom)
 app.use(routesCopy)
 app.use(routesLoans)
+app.use(routesFines)
 app.listen(port, () => {
   console.log(` 🏓 Running on port ${port}`)
 })
