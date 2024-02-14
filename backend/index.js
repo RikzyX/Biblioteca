@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 require('dotenv').config()
 const routesUsers = require('./User/routes/routes')
 const routesBooks = require('./Book/routes/routes')
@@ -13,7 +14,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json({ type: '*/*' }))
 
 const port = process.env.DB_PORT
-app.use(express.static('static'))
+app.use(cors())
+app.use(express.json())
 app.use(routesUsers)
 app.use(routesBooks)
 app.use(routesRecom)
