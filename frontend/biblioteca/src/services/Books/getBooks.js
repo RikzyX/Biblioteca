@@ -2,7 +2,7 @@ import axios from 'axios'
 import { convertirDatosAMinusculas } from '../../constants/trransfomText'
 export const getBook = async () => {
   try {
-    const URL = `http://localhost:3130/libros`
+    const URL = `http://localhost:3130/ejemplares/cantidad`
     const response = await axios.get(URL)
     const { data } = await response.data
     const book = convertirDatosAMinusculas(data)

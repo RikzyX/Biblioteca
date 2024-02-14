@@ -11,6 +11,8 @@ import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Books } from './pages/Books/Book'
 import { User } from './pages/User/User'
+import { HistoryLoan } from './pages/History/Loan/HistoryLoans'
+import { HistoryFines } from './pages/History/Fines/HistoryFines'
 function App() {
   const [opened, { toggle }] = useDisclosure()
   const data = [
@@ -58,7 +60,7 @@ function App() {
       }}
       padding="md"
     >
-      <AppShell.Header>
+      <AppShell.Header withBorder={false}>
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Center>
           <Anchor
@@ -66,9 +68,7 @@ function App() {
             gradient={{ from: 'pink', to: 'yellow' }}
             fw={500}
             fz="lg"
-            p="5px"
-            size="h3"
-            href="dashboard"
+            href="/"
           >
             Biblioteca
           </Anchor>
@@ -83,6 +83,8 @@ function App() {
           <Route path="/libros" element={<Books />} />
           <Route path="/usuarios" element={<User />} />
           <Route path="/ejemplares" element={<Books />} />
+          <Route path="/historialmultas" element={<HistoryFines />} />
+          <Route path="/historialprestamo" element={<HistoryLoan />} />
         </Routes>
       </AppShell.Main>
     </AppShell>
