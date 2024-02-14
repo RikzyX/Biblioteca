@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Center, Table } from '@mantine/core'
+import { ActionIcon,Center, Table } from '@mantine/core'
 import { useGetUser } from '../../hooks/Users/useGetUsers'
 import { Loading } from '../../loading'
 import { IconEditCircle, IconTrashX } from '@tabler/icons-react'

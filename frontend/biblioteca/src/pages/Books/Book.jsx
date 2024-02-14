@@ -6,7 +6,6 @@ import {
   Group,
   Image,
   Text,
-  rem,
 } from '@mantine/core'
 import { useGetBook } from '../../hooks/Books/useGetBooks'
 export const Books = () => {
