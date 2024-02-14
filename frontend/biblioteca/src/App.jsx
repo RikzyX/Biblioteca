@@ -1,12 +1,4 @@
-
-import {
-  Anchor,
-  AppShell,
-  Box,
-  Burger,
-  Center,
-  NavLink,
-} from '@mantine/core'
+import { Anchor, AppShell, Box, Burger, Center, NavLink } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import {
   IconBooks,
@@ -16,6 +8,9 @@ import {
   IconChevronRight,
 } from '@tabler/icons-react'
 import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { Books } from './pages/Books/Book'
+import { User } from './pages/User/User'
 function App() {
   const [opened, { toggle }] = useDisclosure()
   const data = [
@@ -83,8 +78,13 @@ function App() {
       <AppShell.Navbar p="md" withBorder={false}>
         <Box w={220}>{items}</Box>
       </AppShell.Navbar>
-
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Main>
+        <Routes>
+          <Route path="/libros" element={<Books />} />
+          <Route path="/usuarios" element={<User />} />
+          <Route path="/ejemplares" element={<Books />} />
+        </Routes>
+      </AppShell.Main>
     </AppShell>
   )
 }

@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom/client'
 import '@mantine/core/styles.css'
 import { MantineProvider } from '@mantine/core'
 import { RouterProvider } from 'react-router-dom'
-import { router } from './routes/routes.jsx'
+import App from './App.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MantineProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider>
+        <App />
+      </RouterProvider>
     </MantineProvider>
   </React.StrictMode>
 )
